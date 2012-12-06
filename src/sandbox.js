@@ -38,7 +38,7 @@ angular.module('ngSandbox', []).factory('sandbox', function() {
   'var ok = function(a, msg){ equals(a,true,msg); }',
   'var not = function(a, msg){ equals(a,false,msg); }'
   ];
-  var runner = {};
+  var sandbox = {};
   // run lessons code
   // 
   // parameters: 
@@ -47,7 +47,7 @@ angular.module('ngSandbox', []).factory('sandbox', function() {
   // Call back returns the status [HAPPY, SAD, CONFUSED]
   // and the output an array of strings representing the output of the code
   //
-  runner.exec = function(data, cb){
+  sandbox.exec = function(data, cb){
     if (typeof(data) === 'function') { console.log('data required!'); return; }
 
     var $ = angular.element;
@@ -61,13 +61,19 @@ angular.module('ngSandbox', []).factory('sandbox', function() {
     var iframe = $('<iframe style="display: none;"></iframe>').appendTo('body')[0];
     // eval framework code in iframe
     iframe.contentWindow.eval(framework.join("\n"));
+    // add jshint lib
     // add jshint step...
 
     // eval test code in frame
     try {
-      if(data.before) { iframe.contentWindow.run(data.before) };
-      if(data.code) { iframe.contentWindow.run(data.code); };
-      if(data.after) { iframe.contentWindow.run(data.after); };
+      iframe.contentWindow.run([
+        data.before || '// no before',
+        data.code,
+        data.after || '// no after'].join("\n")
+      );
+      // if(data.before) { iframe.contentWindow.run(data.before) };
+      // if(data.code) { iframe.contentWindow.run(data.code); };
+      // if(data.after) { iframe.contentWindow.run(data.after); };
     } catch(err) { 
       status = CONFUSED; 
       output = [err.message];
@@ -89,5 +95,5 @@ angular.module('ngSandbox', []).factory('sandbox', function() {
     // return code
     cb(status, output);
   };
-  return runner;
+  return sandbox;
 });
