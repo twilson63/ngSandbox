@@ -55,11 +55,12 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', 'run testacular tests', function () {
     var options = ['--single-run', '--no-auto-watch', '--reporters=dots'];
-    if (process.env.TRAVIS) {
-      options.push('--browsers=Firefox');
-    } else {
-      options.push('--browsers=PhantomJS');
-    }
+    options.push('--browsers=PhantomJS');
+    // if (process.env.TRAVIS) {
+    //   options.push('--browsers=Firefox');
+    // } else {
+    //   options.push('--browsers=PhantomJS');
+    // }
     runTestacular('start', options);
   });
 };
