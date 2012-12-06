@@ -69,7 +69,8 @@ angular.module('ngSandbox', []).factory('sandbox', function() {
     // todo change not to depend on jquery...
     var iframe = $('<iframe style="display: none;"></iframe>').appendTo('body')[0];
     // eval framework code in iframe
-    iframe.contentWindow.eval(framework.join("\n"));
+    iframe.contentWindow['eval'](framework.join("\n"));
+    //script.text = framework.join("\n");
     // add jshint lib
     // add jshint step...
 
@@ -85,7 +86,7 @@ angular.module('ngSandbox', []).factory('sandbox', function() {
       output = [err.message];
     }
     // if error show sad face and error
-    if(!CONFUSED && iframe.contentWindow.out.length == 0) {
+    if(!CONFUSED && iframe.contentWindow.out.length === 0) {
       status = CONFUSED;
       output = ['No Tests to run!'];
     } else {
@@ -93,7 +94,7 @@ angular.module('ngSandbox', []).factory('sandbox', function() {
         if(res.status === 'failed'){ status = SAD; }
         output.push(res.msg);
       });
-    };
+    }
     // remove iframe
     $('iframe').remove();
     // return code

@@ -39,7 +39,7 @@ colors = true;
 logLevel = LOG_ERROR;
 
 // enable / disable watching file and executing tests whenever any file changes
-autoWatch = true;
+autoWatch = false;
 
 // polling interval in ms (ignored on OS that support inotify)
 autoWatchInterval = 0;
@@ -51,4 +51,4 @@ autoWatchInterval = 0;
 // - Opera
 // - Safari
 // - PhantomJS
-browsers = ['PhantomJS'];
+browsers = [];

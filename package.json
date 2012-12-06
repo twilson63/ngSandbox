@@ -1,0 +1,20 @@
+{
+  "name": "ngSandbox",
+  "version": "0.0.1",
+  "description": "An AngularJS Module for InBrowser Sandbox",
+  "main": "src/sandbox.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies":{
+    "grunt": "0.3.17",
+    "testacular": "0.4.0",
+    "phantomjs": "0.2.3"
+  },
+  "scripts": {
+    "test": "testacular start"
+  },
+  "repository": "",
+  "author": "Tom Wilson",
+  "license": "MIT"
+}
