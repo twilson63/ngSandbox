@@ -3,6 +3,8 @@
 ngSandbox is an Angular Service that allows you to execute
 code in a Sandbox environment in the browser.
 
+[![Build Status](https://secure.travis-ci.org/twilson63/ngSandbox.png)](http://travis-ci.org/twilson63/ngSandbox)
+
 ## How to add to your angular app
 
 First you need to download the /src/sandbox.js file from the scr directory.  Include the file in your script import or minify package.  Then add reference to your angular app.
