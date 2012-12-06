@@ -68,14 +68,15 @@ describe('sandbox#runner', function () {
       });
     })
   );
-  it('should be able to run a code before and after', inject(function(sandbox){
+  it('should be able to enclose code and run before and after', inject(function(sandbox){
       sandbox.exec({
-        before: 'var foo = "bar";',
+        before: '(function() { var foo = "bar";',
         code: 'foo = "baz";',
         after: [
           'test("parent", function(){',
             'ok(foo === "baz", "should eql bar");',
-          '});'
+          '});',
+          '})();'
         ].join('\n')
       }, function(status, output){
         expect(status).toEqual('HAPPY');

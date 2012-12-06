@@ -1,5 +1,16 @@
+//
+// ngSandbox
+//
+//  An AngularJS module used to enable js code to be
+//  executed in a sandbox environment.
+//
+//  With a mini test framework enabled.
 angular.module('ngSandbox', []).factory('sandbox', function() {
   // Simple test framework for code runner
+  var HAPPY = 'HAPPY';
+  var SAD = 'SAD';
+  var CONFUSED = 'CONFUSED';
+
   var framework = [
   'window.run = eval;',
   'delete window.constructor;',
@@ -44,20 +55,18 @@ angular.module('ngSandbox', []).factory('sandbox', function() {
   // parameters: 
   //   -  data - object containing {code, before, after} strings of code
   //   -  callback - function that is called when function is complete
-  // Call back returns the status [HAPPY, SAD, CONFUSED]
-  // and the output an array of strings representing the output of the code
+  // Callback returns:
+  //   - status //-> [HAPPY, SAD, CONFUSED]
+  //   - output //-> array of strings representing the output of the code
   //
   sandbox.exec = function(data, cb){
     if (typeof(data) === 'function') { console.log('data required!'); return; }
 
     var $ = angular.element;
-    var HAPPY = 'HAPPY';
-    var SAD = 'SAD';
-    var CONFUSED = 'CONFUSED';
-
     var status = HAPPY;
     var output = [];
-    // create iframe
+    // create iframe 
+    // todo change not to depend on jquery...
     var iframe = $('<iframe style="display: none;"></iframe>').appendTo('body')[0];
     // eval framework code in iframe
     iframe.contentWindow.eval(framework.join("\n"));
@@ -71,9 +80,6 @@ angular.module('ngSandbox', []).factory('sandbox', function() {
         data.code,
         data.after || '// no after'].join("\n")
       );
-      // if(data.before) { iframe.contentWindow.run(data.before) };
-      // if(data.code) { iframe.contentWindow.run(data.code); };
-      // if(data.after) { iframe.contentWindow.run(data.after); };
     } catch(err) { 
       status = CONFUSED; 
       output = [err.message];
@@ -84,9 +90,7 @@ angular.module('ngSandbox', []).factory('sandbox', function() {
       output = ['No Tests to run!'];
     } else {
       iframe.contentWindow.out.forEach(function(res){
-        if(res.status === 'failed'){
-          status = SAD;
-        }
+        if(res.status === 'failed'){ status = SAD; }
         output.push(res.msg);
       });
     };
