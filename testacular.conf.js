@@ -51,4 +51,4 @@ autoWatchInterval = 0;
 // - Opera
 // - Safari
 // - PhantomJS
-browsers = ['PhantomJS'];
+browsers = ['PhantomJS','Chrome','Firefox'];
